@@ -94,7 +94,7 @@ jobs:
         run: sudo docker container rm ${{ env.CONTAINER_NAME }} || true
 
       - name: Run a new container
-        run: sudo docker run -d --env-file ~/env/${{ env.CONTAINER_NAME }}.env --name ${{ env.CONTAINER_NAME }} --network progolymp --restart unless-stopped --label "traefik.http.routers.${{ env.CONTAINER_NAME }}.rule=Host(\`tools.progolymp.cttit.ru\`)" ${{ env.IMAGE }}
+        run: sudo docker run -d -v /var/run/docker.sock:/var/run/docker.sock --env-file ~/env/${{ env.CONTAINER_NAME }}.env --name ${{ env.CONTAINER_NAME }} --network progolymp --restart unless-stopped --label "traefik.http.routers.${{ env.CONTAINER_NAME }}.rule=Host(\`tools.progolymp.cttit.ru\`)" ${{ env.IMAGE }}
 
       - name: Delete old image
         run: sudo docker image rm ${{ steps.old-image.outputs.image }} || true
